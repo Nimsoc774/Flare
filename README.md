@@ -1,0 +1,2 @@
+# Flare
+Study-rewarding webapp
