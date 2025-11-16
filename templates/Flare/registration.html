@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue-gray900: rgba(15, 23, 42, 1);
+            --fuchsia-700: rgba(162, 28, 175, 1);
+            --heading-5-font-family: "Roboto", Helvetica;
+            --heading-5-font-weight: 700;
+            --heading-5-font-size: 32px;
+            --heading-5-letter-spacing: 0px;
+            --heading-5-line-height: 110.00000238418579%;
+            --heading-5-font-style: normal;
+            --button-m-font-family: "Roboto", Helvetica;
+            --button-m-font-weight: 500;
+            --button-m-font-size: 16px;
+            --button-m-letter-spacing: 0.5px;
+            --button-m-line-height: 24px;
+            --button-m-font-style: normal;
+            --heading-1-m-font-family: "Roboto", Helvetica;
+            --heading-1-m-font-weight: 800;
+            --heading-1-m-font-size: 72px;
+            --heading-1-m-letter-spacing: 0px;
+            --heading-1-m-line-height: 110.00000238418579%;
+            --heading-1-m-font-style: normal;
+            --body-l-font-family: "Roboto", Helvetica;
+            --body-l-font-weight: 400;
+            --body-l-font-size: 18px;
+            --body-l-letter-spacing: 0px;
+            --body-l-line-height: 160.0000023841858%;
+            --body-l-font-style: normal;
+            --subtitle-XL-font-family: "Roboto", Helvetica;
+            --subtitle-XL-font-weight: 500;
+            --subtitle-XL-font-size: 20px;
+            --subtitle-XL-letter-spacing: 0px;
+            --subtitle-XL-line-height: 110.00000238418579%;
+            --subtitle-XL-font-style: normal;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-l-font-family);
+            background-color: #fcf5eb;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        .signup {
+            background-color: #ffffff;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            position: relative;
+        }
+
+        .header {
+            display: flex;
+            width: 100%;
+            height: 114px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px 80px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: #332126;
+            z-index: 10;
+        }
+
+        .header .logo {
+            position: relative;
+            width: fit-content;
+            font-family: var(--heading-5-font-family);
+            font-weight: var(--heading-5-font-weight);
+            color: #ffffff;
+            font-size: var(--heading-5-font-size);
+            letter-spacing: var(--heading-5-letter-spacing);
+            line-height: var(--heading-5-line-height);
+            white-space: nowrap;
+            font-style: var(--heading-5-font-style);
+        }
+
+        .buttons-group {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+            flex: 0 0 auto;
+        }
+
+        .menu-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 8px;
+            position: relative;
+            align-self: stretch;
+            flex: 0 0 auto;
+        }
+
+        .menu-item a {
+            position: relative;
+            width: fit-content;
+            font-family: var(--button-m-font-family);
+            font-weight: var(--button-m-font-weight);
+            color: #ffffff;
+            font-size: var(--button-m-font-size);
+            letter-spacing: var(--button-m-letter-spacing);
+            line-height: var(--button-m-line-height);
+            white-space: nowrap;
+            font-style: var(--button-m-font-style);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .menu-item a:hover {
+            opacity: 0.8;
+        }
+
+        .button-outline {
+            all: unset;
+            box-sizing: border-box;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 16px;
+            position: relative;
+            flex: 0 0 auto;
+            border-radius: 8px;
+            border: 2px solid #ffffff;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .button-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .section {
+            display: flex;
+            width: 50%;
+            height: calc(100vh - 114px);
+            align-items: center;
+            justify-content: center;
+            gap: 80px;
+            padding: 80px;
+            position: absolute;
+            top: 114px;
+            left: 0;
+            background-color: #fcf5eb;
+        }
+
+        .col {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 48px;
+            position: relative;
+            flex: 1;
+            flex-grow: 1;
+        }
+
+        .section-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 32px;
+            position: relative;
+            align-self: stretch;
+            width: 100%;
+            flex: 0 0 auto;
+        }
+
+        .top {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+            position: relative;
+            align-self: stretch;
+            width: 100%;
+            flex: 0 0 auto;
+        }
+
+        .main-headline {
+            position: relative;
+            align-self: stretch;
+            margin-top: -1px;
+            font-family: var(--heading-1-m-font-family);
+            font-weight: var(--heading-1-m-font-weight);
+            color: var(--blue-gray900);
+            font-size: var(--heading-1-m-font-size);
+            letter-spacing: var(--heading-1-m-letter-spacing);
+            line-height: var(--heading-1-m-line-height);
+            font-style: var(--heading-1-m-font-style);
+        }
+
+        .paragraph {
+            position: relative;
+            align-self: stretch;
+            font-family: var(--body-l-font-family);
+            font-weight: var(--body-l-font-weight);
+            color: var(--blue-gray900);
+            font-size: var(--body-l-font-size);
+            letter-spacing: var(--body-l-letter-spacing);
+            line-height: var(--body-l-line-height);
+            font-style: var(--body-l-font-style);
+        }
+
+        .form-container {
+            position: absolute;
+            top: 201px;
+            right: 61px;
+            width: 413px;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            border-radius: 30px;
+            background: linear-gradient(180deg, rgba(244, 111, 138, 1) 0%, rgba(235, 57, 93, 1) 100%);
+            box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            margin-left: 5px;
+            font-family: "Poppins-Medium", Helvetica;
+            font-weight: 500;
+            color: #ffffff;
+            font-size: 14px;
+            letter-spacing: 0;
+            line-height: 22.4px;
+        }
+
+        .form-group input {
+            padding: 14px 14px;
+            background-color: #ffd2d2;
+            border-radius: 10px;
+            border: 2px solid #a67272;
+            font-family: var(--body-l-font-family);
+            font-weight: var(--body-l-font-weight);
+            color: #333;
+            font-size: var(--body-l-font-size);
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            transition: all 0.3s;
+        }
+
+        .form-group input::placeholder {
+            color: #cdacac;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #ff6291;
+            background-color: #fff5f5;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .helptext {
+            display: none;
+        }
+
+        .errorlist {
+            list-style: none;
+            padding: 0;
+            margin: 5px 0 0 0;
+        }
+
+        .errorlist li {
+            color: #ffe1e1;
+            font-size: 12px;
+            margin-top: 5px;
+            font-family: "Poppins-Medium", Helvetica;
+        }
+
+        .form-group ul {
+            display: none;
+        }
+
+        .submit-btn {
+            margin-top: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 109px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            background: linear-gradient(90deg, rgba(255, 98, 145, 1) 0%, rgba(255, 201, 201, 1) 100%);
+            border: none;
+            color: #ffe1e1;
+            font-family: "Poppins-Medium", Helvetica;
+            font-weight: 500;
+            font-size: 20px;
+            letter-spacing: 0;
+            line-height: 32px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.35);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 16px;
+            color: #ffffff;
+            font-family: "Poppins-Medium", Helvetica;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #ffe1e1;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+
+        .login-link a:hover {
+            opacity: 0.8;
+        }
+
+        .messages {
+            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: "Poppins-Medium", Helvetica;
+            font-size: 13px;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+        }
+
+        .message.success {
+            background-color: #c3e6cb;
+            color: #155724;
+            border: 1px solid #b1dfbb;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        @media (max-width: 1200px) {
+            .section {
+                width: 100%;
+                padding: 40px;
+            }
+
+            .form-container {
+                position: relative;
+                right: auto;
+                top: auto;
+                width: 100%;
+                max-width: 400px;
+                margin: 80px auto 0;
+            }
+
+            .main-headline {
+                font-size: 48px;
+            }
+
+            .paragraph {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 16px 20px;
+                height: auto;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .form-container {
+                padding: 30px;
+            }
+
+            .main-headline {
+                font-size: 32px;
+            }
+
+            .buttons-group {
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signup">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">StudyHub</div>
+            <div class="buttons-group">
+                <div class="menu-item">
+                    <a href="{% url 'login' %}">Login</a>
+                </div>
+                <button class="button-outline">Sign Up</button>
+            </div>
+        </div>
+
+        <!-- Left Section - Marketing Content -->
+        <div class="section">
+            <div class="col">
+                <div class="section-text">
+                    <div class="top">
+                        <h1 class="main-headline">Create an Account</h1>
+                        <p class="paragraph">Join our community and start your learning journey today.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Section - Form -->
+        <div class="form-container">
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="{{ form.username.id_for_label }}">Username</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.username.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.email.id_for_label }}">Email</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.email.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.password1.id_for_label }}">Password</label>
+                    {{ form.password1 }}
+                    {% if form.password1.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.password1.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+                    {{ form.password2 }}
+                    {% if form.password2.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.password2.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="submit-btn">Sign Up</button>
+            </form>
+
+            <div class="login-link">
+                Already have an account? <a href="{% url 'login' %}">Log in</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

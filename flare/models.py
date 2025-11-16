@@ -1,83 +1,127 @@
 from django.db import models
 from datetime import timedelta
 from django.utils import timezone
+from django.contrib.auth.models import AbstractUser
 
 def one_day_from_now():
     return timezone.now().date() + timedelta(days=1)
 
 # Create your models here.
-class Task(models.Model):
-    TaskID = models.AutoField(primary_key=True)
-    Taskname = models.CharField(max_length=100)
-    coinValue = models.PositiveIntegerField()
 
-class User(models.Model):
-    userID = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=50)
-    passwordhash = models.CharField(max_length=128)
-    email = models.EmailField()
-    userXP = models.PositiveIntegerField(default=0)
-    coinBalance = models.PositiveIntegerField(default=100)
+class User(AbstractUser):
+    
+    user_xp= models.PositiveIntegerField(default=0)
+    coin_balance = models.PositiveIntegerField(default=100)
+    
+    class Meta:
+        db_table = 'auth_user'
+    
+    def __str__(self):
+        return self.username
+
+class Task(models.Model):
+    name = models.CharField(max_length=100)
+    coin_value = models.PositiveIntegerField()
+    
+    def __str__(self):
+        return self.name
+
 
 class DailyTask(models.Model):
-    AssignmentID = models.AutoField(primary_key=True)
-    TaskID = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='assignments')
-    userID = models.ForeignKey(User, on_delete=models.CASCADE, related_name='daily_tasks')
-    isCompleted = models.BooleanField(default=False)
-    startDate = models.DateField(auto_now_add=True)
-    expiryDate = models.DateField(default=one_day_from_now)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='assignments')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='daily_tasks')
+    is_completed = models.BooleanField(default=False)
+    start_date = models.DateField(auto_now_add=True)
+    expiry_date = models.DateField(default=one_day_from_now)
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.task.name}"
+
 
 class StudySession(models.Model):
-    SessionID = models.AutoField(primary_key=True)
-    UserID = models.ForeignKey(User, on_delete=models.CASCADE, related_name='study_sessions')
-    SubjectName = models.CharField(max_length=100)
-    Study_Duration = models.DurationField()
-    entryDate = models.DateField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='study_sessions')
+    subject_name = models.CharField(max_length=100)
+    study_duration = models.DurationField()
+    entry_date = models.DateField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.subject_name}"
+
 
 class Avatar(models.Model):
-    AvatarID = models.AutoField(primary_key=True)
-    AvatarName = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
     filename = models.CharField(max_length=255)
     cost = models.PositiveIntegerField()
+    
+    def __str__(self):
+        return self.name
+
 
 class UserAvatar(models.Model):
-    AvatarID = models.ForeignKey(Avatar, on_delete=models.CASCADE)
-    UserID = models.ForeignKey(User, on_delete=models.CASCADE)
+    avatar = models.ForeignKey(Avatar, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
     class Meta:
-        unique_together = ['AvatarID', 'UserID']
+        unique_together = ['avatar', 'user']
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.avatar.name}"
+
 
 class Friends(models.Model):
-    UserID = models.ForeignKey(User, related_name='friends', on_delete=models.CASCADE)
-    FriendID = models.ForeignKey(User, related_name='friend_of', on_delete=models.CASCADE)
-    DateAdded = models.DateField()
+    user = models.ForeignKey(User, related_name='friends', on_delete=models.CASCADE)
+    friend = models.ForeignKey(User, related_name='friend_of', on_delete=models.CASCADE)
+    date_added = models.DateField()
+    
+    class Meta:
+        unique_together = ['user', 'friend']
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.friend.username}"
+
 
 class LeaderboardEntry(models.Model):
-    entryID = models.AutoField(primary_key=True)
-    userID = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     rank = models.PositiveIntegerField()
+    
+    def __str__(self):
+        return f"{self.user.username} - Rank {self.rank}"
+
 
 class Challenges(models.Model):
-    ChallengeID = models.AutoField(primary_key=True)
     start_date = models.DateField(auto_now_add=True)
     end_date = models.DateField()
-    isFull = models.BooleanField(default=False)
-    MaxSize = models.PositiveIntegerField()
-    CreatorID = models.ForeignKey(User, on_delete=models.CASCADE)
-    ChallengeTitle = models.CharField(max_length=100)
-    Status = models.CharField(max_length=20)
+    is_full = models.BooleanField(default=False)
+    max_size = models.PositiveIntegerField()
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    status = models.CharField(max_length=20)
     goal = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return self.title
+
 
 class ChallengeParticipants(models.Model):
-    UserID = models.ForeignKey(User, on_delete=models.CASCADE)
-    ChallengeID = models.ForeignKey(Challenges, on_delete=models.CASCADE)
-    joinDate = models.DateField(auto_now_add=True)
-    progress =  models.PositiveIntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    challenge = models.ForeignKey(Challenges, on_delete=models.CASCADE)
+    join_date = models.DateField(auto_now_add=True)
+    progress = models.PositiveIntegerField()
+    
     class Meta:
-        unique_together = ['UserID', 'ChallengeID']
+        unique_together = ['user', 'challenge']
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.challenge.title}"
+
 
 class ChallengeLeaderboard(models.Model):
-    userID = models.ForeignKey(User, on_delete=models.CASCADE)
-    ChallengeID = models.ForeignKey(Challenges, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    challenge = models.ForeignKey(Challenges, on_delete=models.CASCADE)
     rank = models.PositiveIntegerField()
+    
     class Meta:
-        unique_together = ['userID', 'ChallengeID']
+        unique_together = ['user', 'challenge']
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.challenge.title} Rank {self.rank}"
